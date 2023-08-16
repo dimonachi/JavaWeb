@@ -2,6 +2,7 @@ package lib.ui;
 
 
 import io.appium.java_client.AppiumDriver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -22,6 +23,7 @@ public class ArticlePageObject extends MainPageObject{
         super(driver);
     }
 
+    @Step("Waiting for title on the article page")
     public WebElement waitForTitleElement()
     {
         return this.waitForElementPresent(By.xpath(TITLE),"Cannot find article title on page", 15);
@@ -29,17 +31,21 @@ public class ArticlePageObject extends MainPageObject{
     }
 
     /* TEMPLATES METHODS */
+    @Step("Get name of folder")
     private static String getNameOfFolder(String name_of_folder)
     {
         return NAME_OF_FOLDER_TPL.replace("{NameOfFolder}", name_of_folder);
     }
     /* TEMPLATES METHODS */
+    @Step("Get article title")
     public String getArticleTitle()
     {
         WebElement title_element = waitForTitleElement();
+        screenshot(this.takeScreenshot("article_title"));
         return title_element.getAttribute("text");
     }
 
+    @Step("Swiping to footer on article page")
     public void swipeToFooter()
     {
         this.swipeUpToFindElement(
@@ -49,6 +55,7 @@ public class ArticlePageObject extends MainPageObject{
         );
     }
 
+    @Step("Adding the article ot my list")
     public void addArticleToMyList(String name_of_folder)
     {
         this.waitForElementAndClick(
@@ -90,6 +97,7 @@ public class ArticlePageObject extends MainPageObject{
         );
     }
 
+    @Step("Returning from article page")
     public void returnFromArticle()
     {
         this.waitForElementAndClick(
@@ -98,6 +106,7 @@ public class ArticlePageObject extends MainPageObject{
                 5
         );
     }
+    @Step("Adding article to my exist list")
     public void addArticleToMyExistList(String name_of_folder)
     {
         this.waitForElementAndClick(
@@ -121,6 +130,7 @@ public class ArticlePageObject extends MainPageObject{
 
     }
 
+    @Step("Asserting title of article present")
     public void assertTitleOfArticlePresent()
     {
         this.assertElementPresent(
